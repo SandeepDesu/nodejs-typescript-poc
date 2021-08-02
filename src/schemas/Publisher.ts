@@ -1,7 +1,10 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import { IPublisher } from '../interfaces';
 
-export default new Schema({
-  publisher_id: String,
-  name: String,
-  location: String,
+const PublisherSchema = new Schema<IPublisher>({
+  publisher_id: { type: String, required: true },
+  name: { type: String, required: true },
+  location: { type: String, required: true },
 });
+
+export const PublisherModel = model<IPublisher>('Publisher', PublisherSchema);

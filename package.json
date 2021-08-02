@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc":"tsc",
+    "tsc": "tsc",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier": "prettier *.ts",
-    "prettier:fix": "prettier --write *.ts"
+    "prettier:fix": "prettier --write *.ts",
+    "start:dev": "nodemon -e ts dist/index.js"
+  },
+  "nodemonConfig": {
+    "ignore": ["test/*", "dist/*"],
+    "delay": 2500
   },
   "keywords": [],
   "author": "",
@@ -21,6 +26,7 @@
     "@typescript-eslint/parser": "4.28.4",
     "eslint": "7.31.0",
     "eslint-config-airbnb": "18.2.1",
+    "nodemon": "^2.0.12",
     "prettier": "2.3.2",
     "typescript": "^4.3.5"
   },
