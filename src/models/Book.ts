@@ -1,18 +1,29 @@
 import { IBook } from '../interfaces';
-import { BookModel } from '../schemas';
+import { BookSchemaModel } from '../schemas';
 
-class Book {
+class BookModel {
   async getBooks(): Promise<IBook[]> {
-    return await BookModel.find({});
+    return await BookSchemaModel.find({});
   }
 
   async getBook(id: string): Promise<IBook> {
-    return await BookModel.findOne({ _id: id });
+    return await BookSchemaModel.findOne({ _id: id });
   }
 
   async createBook(book: IBook): Promise<IBook> {
-    return await BookModel.create(book);
+    return await BookSchemaModel.create(book);
+  }
+
+  async updateBook(id: string, book: IBook): Promise<IBook> {
+    const filter = { _id: id };
+    const update = { ...book };
+    return await BookSchemaModel.findOneAndUpdate(filter, update);
+  }
+
+  async deleteBook(id: string): Promise<IBook> {
+    const filter = { _id: id };
+    return await BookSchemaModel.findOneAndDelete(filter);
   }
 }
 
-export default new Book();
+export default new BookModel();

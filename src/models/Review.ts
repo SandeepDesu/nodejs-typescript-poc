@@ -1,18 +1,30 @@
 import { IReview } from '../interfaces';
-import { ReviewModel } from '../schemas';
+import { ReviewSchemaModel } from '../schemas';
 
-class Review {
+class ReviewModel {
   async getReviews(): Promise<IReview[]> {
-    return await ReviewModel.find({});
+    return await ReviewSchemaModel.find({});
   }
 
   async getReview(id: string): Promise<IReview> {
-    return await ReviewModel.findOne({ _id: id });
+    return await ReviewSchemaModel.findOne({ _id: id });
   }
 
-  async createReview(book: IReview): Promise<IReview> {
-    return await ReviewModel.create(book);
+  async createReview(review: IReview): Promise<IReview> {
+    return await ReviewSchemaModel.create(review);
   }
+
+  async createReviews(reviews: IReview[]): Promise<IReview[]> {
+    return await ReviewSchemaModel.insertMany(reviews);
+  }
+
+  // async updateReview(review: IReview): Promise<IReview> {
+  //   return await ReviewSchemaModel.updateOne(review);
+  // }
+
+  // async updateReviews(reviews: IReview[]): Promise<IReview[]> {
+  //   return await ReviewSchemaModel.updateMany(reviews);
+  // }
 }
 
-export default new Review();
+export default new ReviewModel();

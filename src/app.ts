@@ -1,5 +1,6 @@
 import { Express, Router } from 'express';
 import { connect } from 'mongoose';
+import * as bodyParser from 'body-parser';
 import routes from './api-routes';
 
 export default class App {
@@ -12,6 +13,8 @@ export default class App {
 
   init(): void {
     this.connectToDb();
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded());
     this.routes(routes);
     this.app.listen(this.port);
   }

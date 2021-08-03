@@ -9,4 +9,4 @@ const BookSchema = new Schema<IBook>({
   publisher: { type: String, required: true },
 });
 
-export const BookModel = model<IBook>('Book', BookSchema);
+export const BookSchemaModel = model<IBook>('Book', BookSchema);
