@@ -6,8 +6,8 @@ class PublisherModel {
     return await PublisherSchemaModel.find({});
   }
 
-  async getPublisher(id: string): Promise<IPublisher> {
-    return await PublisherSchemaModel.findOne({ _id: id });
+  async getPublisher(id: string, options = {}): Promise<IPublisher> {
+    return await PublisherSchemaModel.findOne({ _id: id }, options);
   }
 
   async createPublisher(publisher: IPublisher): Promise<IPublisher> {

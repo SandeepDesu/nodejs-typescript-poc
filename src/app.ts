@@ -27,6 +27,7 @@ export default class App {
     connect('mongodb+srv://admin:dbadmin@cluster0.ggwrp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
   }
 }

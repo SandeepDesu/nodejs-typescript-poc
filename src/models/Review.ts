@@ -2,8 +2,8 @@ import { IReview } from '../interfaces';
 import { ReviewSchemaModel } from '../schemas';
 
 class ReviewModel {
-  async getReviews(): Promise<IReview[]> {
-    return await ReviewSchemaModel.find({});
+  async getReviews(filter = {}, options = {}): Promise<IReview[]> {
+    return await ReviewSchemaModel.find(filter, options);
   }
 
   async getReview(id: string): Promise<IReview> {

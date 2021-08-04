@@ -4,15 +4,66 @@ import BookModel from '../models/Book';
 import ReviewModel from '../models/Review';
 import PublisherModel from '../models/Publisher';
 
+import { IBook } from '../interfaces';
+
 class BookService {
   async getBooks(req: Request, res: Response): Promise<void> {
-    const results = await BookModel.getBooks()
+    const books = await BookModel.getBooks();
+    const results = await Promise.all(
+      books.map(async (book: IBook) => {
+        const b = {
+          book_id: book._id,
+          name: book.name,
+          author: book.author,
+          price: book.price,
+          reviews: [],
+          publisher: {},
+        };
+
+        const reviews = await ReviewModel.getReviews(
+          { _id: { $in: book.reviews } },
+          { review_id: '$_id', _id: 0, reviwer: 1, message: 1 },
+        );
+
+        const publisher = await PublisherModel.getPublisher(book.publisher, {
+          publisher_id: '$_id',
+          _id: 0,
+          name: 1,
+          location: 1,
+        });
+
+        b.reviews = reviews;
+        b.publisher = publisher;
+        return b;
+      }),
+    );
     res.send(results);
   }
 
   async getBook(req: Request, res: Response): Promise<void> {
-    const results = await BookModel.getBook(req.params.book_id);
-    res.send(results);
+    const book = await BookModel.getBook(req.params.book_id);
+    const b = {
+      book_id: book._id,
+      name: book.name,
+      author: book.author,
+      price: book.price,
+      reviews: [],
+      publisher: {},
+    };
+    const reviews = await ReviewModel.getReviews(
+      { _id: { $in: book.reviews } },
+      { review_id: '$_id', _id: 0, reviwer: 1, message: 1 },
+    );
+
+    const publisher = await PublisherModel.getPublisher(book.publisher, {
+      publisher_id: '$_id',
+      _id: 0,
+      name: 1,
+      location: 1,
+    });
+    b.reviews = reviews;
+    b.publisher = publisher;
+    res.send(b);
   }
 
   async createBook(req: Request, res: Response): Promise<void> {
