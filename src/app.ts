@@ -1,8 +1,9 @@
 import { Express, Router } from 'express';
 import { connect } from 'mongoose';
 import * as bodyParser from 'body-parser';
-import routes from './api-routes';
 
+import routes from './api-routes';
+import { logger } from './helper/log4j';
 export default class App {
   app: Express;
   port = process.env.PORT || 3000;
@@ -16,7 +17,7 @@ export default class App {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded());
     this.routes(routes);
-    this.app.listen(this.port);
+    this.app.listen(this.port, () => logger.info(`Server started at http://localhost:${this.port}`));
   }
 
   routes(routes: Router): void {
